@@ -1,7 +1,11 @@
 .idea/
 
-target/
+**/target/
 
 project/
 
 *.iml
+*.class
+*.jar
+*.crc
+receivedBlockMetadata/
