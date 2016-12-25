@@ -38,7 +38,7 @@ object SerialWordCountApp {
 //      }
 //    ).print()
 
-    // 更新状态
+    // 更新状态，针对某key的当前状态和前状态
     val mappingFunc = (word: String, one: Option[Int], state: State[Int]) => {
       val sum = one.getOrElse(0) + state.getOption.getOrElse(0)
       val output = (word, sum) // 最新的状态
