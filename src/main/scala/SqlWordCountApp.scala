@@ -8,6 +8,8 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
   * Created by wanhongfei on 2016/12/24.
   * Object下的都是静态，Class下都是成员
+  * Exception in thread "streaming-job-executor-2" java.lang.NoClassDefFoundError: s
+  * cala/collection/GenTraversableOnce$class
   */
 object SqlWordCountApp {
 
