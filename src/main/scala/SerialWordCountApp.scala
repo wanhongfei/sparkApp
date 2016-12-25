@@ -1,6 +1,6 @@
 import org.apache.spark.SparkContext._
 import org.apache.spark.storage.StorageLevel
-import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.streaming.{Seconds, State, StateSpec, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -29,13 +29,26 @@ object SerialWordCountApp {
     val wordsMap = words.map(word => (word, 1))
 
     // 更新状态
-    wordsMap.updateStateByKey(
-      // groupByKey=>(string,[int1,int2])
-      (currValues: Seq[Int], preValue: Option[Int]) => {
-        val currValue = currValues.sum //将目前值相加
-        Some(currValue + preValue.getOrElse(0)) //目前值的和加上历史值
-      }
-    ).print()
+    // 使用了cogroup函数，会导致全部数据的扫描，性能低，大量复杂的计算不适合使用
+//    wordsMap.updateStateByKey(
+//      // groupByKey=>(string,[int1,int2])
+//      (currValues: Seq[Int], preValue: Option[Int]) => {
+//        val currValue = currValues.sum //将目前值相加
+//        Some(currValue + preValue.getOrElse(0)) //返回目前值的和加上历史值
+//      }
+//    ).print()
+
+    // 更新状态
+    val mappingFunc = (word: String, one: Option[Int], state: State[Int]) => {
+      val sum = one.getOrElse(0) + state.getOption.getOrElse(0)
+      val output = (word, sum) // 最新的状态
+      state.update(sum) // 更新状态
+      output // 放回最新的状态
+    }
+    // 最新状态
+    val state = wordsMap.mapWithState(StateSpec.function(mappingFunc))
+    // 打印结果
+    state.print()
 
     // 开始监听端口
     ssc.start()
