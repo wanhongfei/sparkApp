@@ -19,7 +19,7 @@ object WindowWordCountApp {
     val conf = new SparkConf() /*.setMaster("local")*/ .setAppName("WindowWordCountApp")
     val sc = new SparkContext(conf)
     // batchInterval = 10
-    val ssc = new StreamingContext(sc, Seconds(10));
+    val ssc = new StreamingContext(sc, Seconds(10))
     // 开启端口接收数据
     val lines = ssc.socketTextStream("localhost", 9999, StorageLevel.MEMORY_AND_DISK_SER)
     // 将字符串按照空格划分

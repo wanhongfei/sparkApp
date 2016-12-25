@@ -18,7 +18,7 @@ object KafkaWordCountApp {
     // 初始化常量
     val conf = new SparkConf() /*.setMaster("local")*/ .setAppName("KafkaWordCountApp")
     val sc = new SparkContext(conf)
-    val ssc = new StreamingContext(sc, Seconds(10));
+    val ssc = new StreamingContext(sc, Seconds(10))
     // 接收kafka的消息
     val lines = KafkaUtils.createStream(ssc,
       "localhost:2181" /*zookeeperURL*/ ,

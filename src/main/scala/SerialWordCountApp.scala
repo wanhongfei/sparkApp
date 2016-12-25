@@ -18,7 +18,7 @@ object SerialWordCountApp {
     // 初始化常量
     val conf = new SparkConf() /*.setMaster("local")*/ .setAppName("SerialWordCountApp")
     val sc = new SparkContext(conf)
-    val ssc = new StreamingContext(sc, Seconds(10));
+    val ssc = new StreamingContext(sc, Seconds(10))
     // 设置checkpoint
     ssc.checkpoint(".")
     // 开启端口接收数据

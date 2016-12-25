@@ -18,7 +18,7 @@ object WordCountApp {
     // 初始化常量
     val conf = new SparkConf() /*.setMaster("local")*/ .setAppName("WordCountApp")
     val sc = new SparkContext(conf)
-    val ssc = new StreamingContext(sc, Seconds(10));
+    val ssc = new StreamingContext(sc, Seconds(10))
     // 开启端口接收数据
     val lines = ssc.socketTextStream("localhost", 9999, StorageLevel.MEMORY_AND_DISK_SER)
     // 将字符串按照空格划分
