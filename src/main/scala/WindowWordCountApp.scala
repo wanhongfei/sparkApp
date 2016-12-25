@@ -31,7 +31,8 @@ object WindowWordCountApp {
       (a: Int, b: Int) => {
         a + b
       },
-      Seconds(20) /*窗口大小，必须为batchInterval的倍数*/ ,
+      //每隔10秒，统计一下过去30秒过来的数据
+      Seconds(30) /*窗口大小，必须为batchInterval的倍数*/ ,
       Seconds(10) /*滑动大小，必须为batchInterval的倍数*/)
     // 打印输出
     wordsCntMap.print()
