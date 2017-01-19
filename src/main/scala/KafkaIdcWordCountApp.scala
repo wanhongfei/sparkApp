@@ -21,10 +21,9 @@ object KafkaIdcWordCountApp {
     val ssc = new StreamingContext(sc, Seconds(10))
     // 接收kafka的消息
     val lines = KafkaUtils.createStream(ssc,
-      "cm022.wxsq.jd.com:2181,cm023.wxsq.jd.com:2181,cm024.wxsq.jd.com:2181,cm025.wxsq.jd.com:2181" /*zookeeperURL*/ ,
+      "cm002.wxsq.jd.com:2181,cm003.wxsq.jd.com:2181,cm004.wxsq.jd.com:2181" /*zookeeperURL*/ ,
       "console-consumer-70126" /*groupid*/ ,
-      Map(
-        "test_test" -> 1)
+      "test_test".split(",").map((_, 1)).toMap
     ).map(_._2)
     // 将字符串按照空格划分
     val words = lines.flatMap(_.split(" "))

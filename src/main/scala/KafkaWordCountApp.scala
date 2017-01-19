@@ -23,9 +23,7 @@ object KafkaWordCountApp {
     val lines = KafkaUtils.createStream(ssc,
       "localhost:2181" /*zookeeperURL*/ ,
       "console-consumer-80037" /*groupid*/ ,
-      Map(
-        "mytopic" -> 3 /*topics下的分区数*/ ,
-        "testtopic" -> 2)
+      "mytopic,testtopic".split(",").map((_, 1)).toMap
     ).map(_._2)
     // 将字符串按照空格划分
     val words = lines.flatMap(_.split(" "))
